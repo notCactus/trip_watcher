@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:trip_watcher/models/station_searcher.dart';
+import '../utils/station_searcher.dart';
 
 class Search extends StatelessWidget {
   @override

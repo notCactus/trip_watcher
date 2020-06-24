@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/home_page.dart';
-import 'providers/latest_trip.dart';
+import 'providers/new_trip.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (c) => LatestTrip(),
+          create: (c) => NewTrip(),
         ),
       ],
       child: MaterialApp(

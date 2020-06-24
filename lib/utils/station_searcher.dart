@@ -7,7 +7,7 @@ import 'dart:async';
 import '../models/stations.dart';
 import 'debouncer.dart';
 import 'devfile.dart';
-import '../providers/latest_trip.dart';
+import '../providers/new_trip.dart';
 
 /// Searches for the stations based off [query].
 ///
@@ -88,14 +88,14 @@ class StationSearcher extends SearchDelegate<Stations> {
 
   @override
   Widget buildResults(BuildContext context) {
-    final tripInfo = Provider.of<LatestTrip>(context);
+    final tripInfo = Provider.of<NewTrip>(context);
 
     return Text(tripInfo.fromStation.name);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final tripInfo = Provider.of<LatestTrip>(context, listen: false);
+    final tripInfo = Provider.of<NewTrip>(context, listen: false);
 
     // The stations
     Future<Stations> stationsFuture;

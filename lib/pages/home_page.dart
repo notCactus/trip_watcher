@@ -9,7 +9,7 @@ import '../models/stations.dart';
 
 Future<Stations> fetchStations() async {
   const String baseUrl =
-      'https://api.resrobot.se/v2/location.name?key=${apiKey.key}';
+      'https://api.resrobot.se/v2/location.name?key=${ApiKey.key}';
   String url = baseUrl + '&input=Fridhems&format=json';
 
   Stations stationsList;

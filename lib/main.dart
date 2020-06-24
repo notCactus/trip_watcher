@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'pages/home_page.dart';
+import 'providers/latest_trip.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Trip Watcher',
-      theme: ThemeData(
-        primarySwatch: white,
-        accentColor: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (c) => LatestTrip(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Trip Watcher',
+        theme: ThemeData(
+          primarySwatch: white,
+          accentColor: Colors.blue,
+        ),
+        home: HomePage(),
+        routes: {
+          HomePage.routeName: (ctx) => HomePage(),
+        },
       ),
-      home: HomePage(),
-      routes: {
-        HomePage.routeName: (ctx) => HomePage(),
-      },
     );
   }
 }

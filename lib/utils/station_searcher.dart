@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'dart:async';
 
 import '../models/stations.dart';
 import 'debouncer.dart';
 import 'devfile.dart';
+import '../providers/latest_trip.dart';
 
-// Note: Maybe make it return a list with suggestions if query is empty.
 /// Searches for the stations based off [query].
 ///
 /// [suggestedStations] is returned whenever the query is empty.
@@ -23,7 +24,7 @@ Future<Stations> fetchStations(String query, Stations suggestedStations,
   }
 
   const String _baseUrl =
-      'https://api.resrobot.se/v2/location.name?key=${apiKey.key}';
+      'https://api.resrobot.se/v2/location.name?key=${ApiKey.key}';
   String _url = _baseUrl + '&input=$query&format=json';
 
   Stations _stationsList;
@@ -87,17 +88,15 @@ class StationSearcher extends SearchDelegate<Stations> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // Test/Placeholder
-    return Card(
-      color: Colors.red,
-      child: Center(
-        child: Text(query),
-      ),
-    );
+    final tripInfo = Provider.of<LatestTrip>(context);
+
+    return Text(tripInfo.fromStation.name);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    final tripInfo = Provider.of<LatestTrip>(context, listen: false);
+
     // The stations
     Future<Stations> stationsFuture;
 
@@ -117,21 +116,30 @@ class StationSearcher extends SearchDelegate<Stations> {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
             _searchResult = snapshot.data;
-            return stationSuggestionsList(_searchResult, context, showResults);
+            return stationSuggestionsList(_searchResult, context,
+                (ctx, newStopLocation) {
+              tripInfo.fromStation = newStopLocation;
+              showResults(ctx);
+            });
             break;
           default:
-            return stationSuggestionsList(_searchResult, context, showResults);
+            return stationSuggestionsList(_searchResult, context,
+                (ctx, newStopLocation) {
+              tripInfo.fromStation = newStopLocation;
+              showResults(ctx);
+            });
         }
       },
     );
   }
 
   /// A list for displaying station suggestions based of [stationsList].
-  ListView stationSuggestionsList(Stations stationsList, BuildContext context, Function onTapFunction) {
+  ListView stationSuggestionsList(
+      Stations stationsList, BuildContext context, Function onTapFunction) {
     return ListView.builder(
       itemBuilder: (context, i) => ListTile(
         onTap: () {
-          onTapFunction(context);
+          onTapFunction(context, stationsList.stopLocation[i]);
         },
         leading: Icon(Icons.location_city),
         title: Text(stationsList.stopLocation[i].name),

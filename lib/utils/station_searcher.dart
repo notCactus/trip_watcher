@@ -16,7 +16,6 @@ import '../providers/new_trip.dart';
 /// [maxQueryLength] max query length for the request to go to the api.
 Future<Stations> fetchStations(String query, Stations suggestedStations,
     {int minQueryLength = 3, int maxQueryLength = 30}) async {
-  print('Query: $query');
   if (["", null, false, 0].contains(query) ||
       query.length < minQueryLength ||
       query.length > maxQueryLength) {
@@ -49,7 +48,7 @@ Future<Stations> fetchStations(String query, Stations suggestedStations,
 final _debouncer = Debouncer(milliseconds: 500);
 
 /// A SearchDelegate for searching stations.
-class StationSearcher extends SearchDelegate<Stations> {
+class StationSearcher extends SearchDelegate<StopLocation> {
   @override
   String get searchFieldLabel => 'Enter a station...';
 
@@ -88,9 +87,7 @@ class StationSearcher extends SearchDelegate<Stations> {
 
   @override
   Widget buildResults(BuildContext context) {
-    final tripInfo = Provider.of<NewTrip>(context);
-
-    return Text(tripInfo.fromStation.name);
+    return Text('Something went wrong');
   }
 
   @override
@@ -108,6 +105,12 @@ class StationSearcher extends SearchDelegate<Stations> {
       completer.complete(await fetchStations(query, _searchResult));
     });
 
+    void _getTripStation(StopLocation newStopLocation) {
+      tripInfo.fromStation == null
+          ? tripInfo.fromStation = newStopLocation
+          : tripInfo.toStation = newStopLocation;
+    }
+
     stationsFuture = completer.future;
 
     return FutureBuilder(
@@ -118,15 +121,15 @@ class StationSearcher extends SearchDelegate<Stations> {
             _searchResult = snapshot.data;
             return stationSuggestionsList(_searchResult, context,
                 (ctx, newStopLocation) {
-              tripInfo.fromStation = newStopLocation;
-              showResults(ctx);
+              _getTripStation(newStopLocation);
+              close(ctx, newStopLocation);
             });
             break;
           default:
             return stationSuggestionsList(_searchResult, context,
                 (ctx, newStopLocation) {
-              tripInfo.fromStation = newStopLocation;
-              showResults(ctx);
+              _getTripStation(newStopLocation);
+              close(ctx, newStopLocation);
             });
         }
       },

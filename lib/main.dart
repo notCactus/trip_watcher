@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         title: 'Trip Watcher',
         theme: ThemeData(
           primarySwatch: white,
-          accentColor: Colors.blue,
+          accentColor: Colors.lightBlue,
         ),
         home: HomePage(),
         routes: {

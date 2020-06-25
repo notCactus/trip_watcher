@@ -6,13 +6,10 @@ import '../models/stations.dart';
 class NewTrip with ChangeNotifier {
   StopLocation _fromStation;
   StopLocation _toStation;
-  bool _inProgress;
 
   StopLocation get fromStation => _fromStation;
 
   StopLocation get toStation => _toStation;
-
-  bool get inProgress => _inProgress;
 
   set fromStation(StopLocation newStation) {
     _fromStation = newStation;
@@ -21,11 +18,6 @@ class NewTrip with ChangeNotifier {
 
   set toStation(StopLocation newStation) {
     _toStation = newStation;
-    notifyListeners();
-  }
-
-  set inProgress(bool newProgress) {
-    _inProgress = newProgress;
     notifyListeners();
   }
 }

@@ -10,18 +10,19 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Row(
+        child: Column(
           children: <Widget>[
-            Expanded(
-              child: Search(),
-            ),
+            Search(),
           ],
         ),
       ),
       backgroundColor: const Color(0xFFECECEC),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: const Icon(Icons.star),
+        child: const Icon(
+          Icons.star,
+          color: Colors.white,
+        ),
       ),
     );
   }

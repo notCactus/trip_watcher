@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'dart:async';
 
 import '../models/stations.dart';
 import 'debouncer.dart';
 import 'devfile.dart';
-import '../providers/new_trip.dart';
 
 /// Searches for the stations based off [query].
 ///
@@ -87,13 +85,11 @@ class StationSearcher extends SearchDelegate<StopLocation> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Text('Something went wrong');
+    return Text('Something went wrong.');
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final tripInfo = Provider.of<NewTrip>(context, listen: false);
-
     // The stations
     Future<Stations> stationsFuture;
 
@@ -105,12 +101,6 @@ class StationSearcher extends SearchDelegate<StopLocation> {
       completer.complete(await fetchStations(query, _searchResult));
     });
 
-    void _getTripStation(StopLocation newStopLocation) {
-      tripInfo.fromStation == null
-          ? tripInfo.fromStation = newStopLocation
-          : tripInfo.toStation = newStopLocation;
-    }
-
     stationsFuture = completer.future;
 
     return FutureBuilder(
@@ -121,14 +111,12 @@ class StationSearcher extends SearchDelegate<StopLocation> {
             _searchResult = snapshot.data;
             return stationSuggestionsList(_searchResult, context,
                 (ctx, newStopLocation) {
-              _getTripStation(newStopLocation);
               close(ctx, newStopLocation);
             });
             break;
           default:
             return stationSuggestionsList(_searchResult, context,
                 (ctx, newStopLocation) {
-              _getTripStation(newStopLocation);
               close(ctx, newStopLocation);
             });
         }

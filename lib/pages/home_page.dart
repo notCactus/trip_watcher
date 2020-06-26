@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/departure_time.dart';
 import '../widgets/search.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,6 +12,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Search(),
+            DepartureTime(),
           ],
         ),
       ),

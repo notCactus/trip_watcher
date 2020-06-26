@@ -43,7 +43,7 @@ Future<Stations> fetchStations(String query, Stations suggestedStations,
 }
 
 // The debouncer
-final _debouncer = Debouncer(milliseconds: 500);
+final _debouncer = Debouncer(milliseconds: 300);
 
 /// A SearchDelegate for searching stations.
 class StationSearcher extends SearchDelegate<StopLocation> {

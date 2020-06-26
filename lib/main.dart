@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+// Only for dev.
+import 'package:device_preview/device_preview.dart';
 
 import 'pages/home_page.dart';
 import 'providers/new_trip.dart';
+
+/*void main() => runApp(DevicePreview(
+      builder: (context) => MyApp(),
+    ));*/
 
 void main() => runApp(MyApp());
 

@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DepartureTime extends StatelessWidget {
-  String _departureSetting = 'Depart';
-  String _time = '12:56';
+  final String _departureSetting = 'Depart';
+  final String _time = '12:56';
 
-  DateTime _dateTime = DateTime.now();
+  //DateTime _dateTime = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +13,11 @@ class DepartureTime extends StatelessWidget {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onPressed: () {
+        // Show the date time picker.
         showCupertinoModalPopup(
           context: context,
           builder: (context) => _datepicker(
+            context: context,
             child: CupertinoDatePicker(
               use24hFormat: true,
               onDateTimeChanged: (value) {},
@@ -31,7 +33,10 @@ class DepartureTime extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Icon(Icons.access_time,color: Colors.lightBlue,),
+          Icon(
+            Icons.access_time,
+            color: Colors.lightBlue,
+          ),
           Text(_departureSetting),
           Text(_time),
           Icon(Icons.arrow_drop_down),
@@ -41,7 +46,7 @@ class DepartureTime extends StatelessWidget {
   }
 }
 
-Widget _datepicker({Widget child}) {
+Widget _datepicker({Widget child, BuildContext context}) {
   return Container(
     height: 220,
     margin: EdgeInsets.symmetric(horizontal: 8, vertical: 24),
@@ -63,16 +68,30 @@ Widget _datepicker({Widget child}) {
           fit: FlexFit.loose,
           flex: 1,
           child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
             onTap: () {
-              print('TAAAAAAAAAAAP!');
+              // Hide the date time picker if the done text or area is clicked.
+              Navigator.of(context).pop();
             },
-            child: Container(
-              child: Text(
-                'Done',
-                style: TextStyle(
-                    color: Colors.lightBlue,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w100),
+            child: SizedBox.expand(
+              child: Container(
+                alignment: Alignment.center,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Done',
+                      style: TextStyle(
+                          color: Colors.lightBlue,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w100,
+                          decoration: TextDecoration.none),
+                    ),
+                    // Padding for the bottom.
+                    SizedBox(
+                      height: 8,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

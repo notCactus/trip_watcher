@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trip_watcher/models/stations.dart';
 
+import '../models/stations.dart';
 import '../providers/new_trip.dart';
 import '../utils/station_searcher.dart';
 
@@ -42,7 +42,7 @@ class Search extends StatelessWidget {
                 topLeftBorder: 0,
                 topRightBorder: 0,
                 fromButton: false,
-              )
+              ),
             ],
           ),
         ),
@@ -56,7 +56,10 @@ class Search extends StatelessWidget {
                 height: 12,
               ),
               RawMaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  final newTrip = Provider.of<NewTrip>(context, listen: false);
+                  newTrip.swapStations();
+                },
                 elevation: 6,
                 fillColor: Colors.white,
                 child: Icon(
@@ -79,7 +82,7 @@ class Search extends StatelessWidget {
   }
 }
 
-class ChooseStationButton extends StatefulWidget {
+class ChooseStationButton extends StatelessWidget {
   final double topLeftBorder;
   final double topRightBorder;
   final double bottomLeftBorder;
@@ -102,23 +105,13 @@ class ChooseStationButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ChooseStationButtonState createState() => _ChooseStationButtonState();
-}
-
-class _ChooseStationButtonState extends State<ChooseStationButton> {
-  String _title = 'Station';
-  StopLocation _stopLocation;
-
-  @override
   Widget build(BuildContext context) {
     // So that the provider can get updated.
-    final newTrip = Provider.of<NewTrip>(context, listen: false);
+    final _newTrip = Provider.of<NewTrip>(context, listen: false);
+    StopLocation _stopLocation;
     return Padding(
       padding: EdgeInsets.only(
-          left: 6,
-          right: 6,
-          top: widget.topPadding,
-          bottom: widget.bottomPadding),
+          left: 6, right: 6, top: topPadding, bottom: bottomPadding),
       child: InkWell(
         onTap: () async {
           _stopLocation =
@@ -126,43 +119,35 @@ class _ChooseStationButtonState extends State<ChooseStationButton> {
 
           if (_stopLocation != null) {
             // Update the provider
-            widget.fromButton
-                ? newTrip.fromStation = _stopLocation
-                : newTrip.toStation = _stopLocation;
-
-            setState(() {
-              _title = _stopLocation.name;
-            });
-          }
-
-          //testing
-          if (newTrip.fromStation != null) {
-            print('from: ${newTrip.fromStation.name}');
-          }
-          if (newTrip.toStation != null) {
-            print('to: ${newTrip.toStation.name}');
+            fromButton
+                ? _newTrip.fromStation = _stopLocation
+                : _newTrip.toStation = _stopLocation;
           }
         },
         child: Card(
           margin: EdgeInsets.zero,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(widget.topLeftBorder),
-            topRight: Radius.circular(widget.topRightBorder),
-            bottomLeft: Radius.circular(widget.bottomLeftBorder),
-            bottomRight: Radius.circular(widget.bottomRightBorder),
+            topLeft: Radius.circular(topLeftBorder),
+            topRight: Radius.circular(topRightBorder),
+            bottomLeft: Radius.circular(bottomLeftBorder),
+            bottomRight: Radius.circular(bottomRightBorder),
           )),
           child: ListTile(
             contentPadding:
                 EdgeInsets.only(left: 16, right: 26, bottom: 8, top: 8),
-            title: Text(
-              _title,
-              style: TextStyle(color: Colors.black, fontSize: 28),
-              overflow: TextOverflow.clip,
-              maxLines: 1,
+            title: Consumer<NewTrip>(
+              builder: (context, newTrip, child) => Text(
+                fromButton
+                ? newTrip.fromStation.name  
+                : newTrip.toStation.name,
+                style: TextStyle(color: Colors.black, fontSize: 28),
+                overflow: TextOverflow.clip,
+                maxLines: 1,
+              ),
             ),
             subtitle: Text(
-              widget.subtitle,
+              subtitle,
               overflow: TextOverflow.clip,
               maxLines: 1,
             ),

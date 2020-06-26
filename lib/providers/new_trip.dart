@@ -4,8 +4,8 @@ import '../models/stations.dart';
 
 /// Stores the latest trip.
 class NewTrip with ChangeNotifier {
-  StopLocation _fromStation;
-  StopLocation _toStation;
+  StopLocation _fromStation = StopLocation(name: 'Tap to search...');
+  StopLocation _toStation = StopLocation(name: 'Tap to search...');
 
   StopLocation get fromStation => _fromStation;
 
@@ -18,6 +18,14 @@ class NewTrip with ChangeNotifier {
 
   set toStation(StopLocation newStation) {
     _toStation = newStation;
+    notifyListeners();
+  }
+
+  /// Swaps [_fromStation] and [_toStation] with eachother.
+  void swapStations() {
+    StopLocation tempStation = _fromStation;
+    _fromStation = _toStation;
+    _toStation = tempStation;
     notifyListeners();
   }
 }

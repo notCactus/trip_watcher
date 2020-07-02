@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (c) => NewTrip(),
+          create: (context) => NewTrip(),
         ),
       ],
       child: MaterialApp(

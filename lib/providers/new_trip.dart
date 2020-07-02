@@ -7,9 +7,17 @@ class NewTrip with ChangeNotifier {
   StopLocation _fromStation = StopLocation(name: 'Tap to search...');
   StopLocation _toStation = StopLocation(name: 'Tap to search...');
 
-  StopLocation get fromStation => _fromStation;
+  DateTime _dateAndTime = DateTime.now();
 
+  DateTime get dateAndTime => _dateAndTime;
+
+  StopLocation get fromStation => _fromStation;
   StopLocation get toStation => _toStation;
+
+  set dateAndTime(DateTime newDateAndTime) {
+    _dateAndTime = newDateAndTime;
+    notifyListeners();
+  }
 
   set fromStation(StopLocation newStation) {
     _fromStation = newStation;

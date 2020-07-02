@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/new_trip.dart';
 
 class DepartureTime extends StatelessWidget {
   final String _departureSetting = 'Depart';
-  final String _time = '12:56';
-
-  //DateTime _dateTime = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,10 @@ class DepartureTime extends StatelessWidget {
             context: context,
             child: CupertinoDatePicker(
               use24hFormat: true,
-              onDateTimeChanged: (value) {},
+              onDateTimeChanged: (value) {
+                var newTrip = Provider.of<NewTrip>(context, listen: false);
+                newTrip.dateAndTime = value;
+              },
             ),
           ),
         );
@@ -38,7 +42,10 @@ class DepartureTime extends StatelessWidget {
             color: Colors.lightBlue,
           ),
           Text(_departureSetting),
-          Text(_time),
+          Consumer<NewTrip>(
+            builder: (context, value, child) =>
+                Text(DateFormat('HH:mm').format(value.dateAndTime)),
+          ),
           Icon(Icons.arrow_drop_down),
         ],
       ),

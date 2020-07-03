@@ -10,10 +10,8 @@ class DepartureTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      onPressed: () {
+    return GestureDetector(
+      onTap: () {
         // Show the date time picker.
         showCupertinoModalPopup(
           context: context,
@@ -29,25 +27,33 @@ class DepartureTime extends StatelessWidget {
           ),
         );
       },
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: BorderSide(color: Colors.grey),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Icon(
-            Icons.access_time,
-            color: Colors.lightBlue,
-          ),
-          Text(_departureSetting),
-          Consumer<NewTrip>(
-            builder: (context, value, child) =>
-                Text(DateFormat('HH:mm').format(value.dateAndTime)),
-          ),
-          Icon(Icons.arrow_drop_down),
-        ],
+      child: Container(
+        padding: EdgeInsets.only(
+          bottom: 4,
+          left: 8,
+          right: 8,
+          top: 4,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.grey),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Icon(
+              Icons.access_time,
+              color: Colors.lightBlue,
+            ),
+            Text(_departureSetting),
+            Consumer<NewTrip>(
+              builder: (context, value, child) =>
+                  Text(DateFormat('HH:mm').format(value.dateAndTime)),
+            ),
+            Icon(Icons.arrow_drop_down),
+          ],
+        ),
       ),
     );
   }

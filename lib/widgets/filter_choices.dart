@@ -1,23 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trip_watcher/providers/new_trip.dart';
 
-class FilterChoices extends StatefulWidget {
-  @override
-  _FilterChoicesState createState() => _FilterChoicesState();
-}
-
-class _FilterChoicesState extends State<FilterChoices> {
-  List<bool> _isSelected = [
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-  ];
-
+class FilterChoices extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,26 +30,27 @@ class _FilterChoicesState extends State<FilterChoices> {
               width: MediaQuery.of(context).size.width - 16,
               child: RotatedBox(
                 quarterTurns: 1,
-                child: ToggleButtons(
-                  selectedColor: Colors.black,
-                  fillColor: Colors.indigo.withOpacity(0.5),
-                  children: <Widget>[
-                    _toggleButton('Snabbtåg, Expresståg, Arlanda Express'),
-                    _toggleButton('Regionaltåg, InterCitytåg'),
-                    _toggleButton('Expressbuss, Flygbussar'),
-                    _toggleButton('Lokaltåg, Pågatåg, Öresundståg'),
-                    _toggleButton('Tunnelbana'),
-                    _toggleButton('Spårvagn'),
-                    _toggleButton('Buss'),
-                    _toggleButton('Färja, Utrikes Färja'),
-                    _toggleButton('Taxi'),
-                  ],
-                  isSelected: _isSelected,
-                  onPressed: (int index) {
-                    setState(() {
-                      _isSelected[index] = !_isSelected[index];
-                    });
-                  },
+                child: Consumer<NewTrip>(
+                  builder: (context, value, child) => ToggleButtons(
+                    selectedColor: Colors.black,
+                    fillColor: Colors.indigo.withOpacity(0.5),
+                    children: <Widget>[
+                      _toggleButton('Snabbtåg, Expresståg, Arlanda Express'),
+                      _toggleButton('Regionaltåg, InterCitytåg'),
+                      _toggleButton('Expressbuss, Flygbussar'),
+                      _toggleButton('Lokaltåg, Pågatåg, Öresundståg'),
+                      _toggleButton('Tunnelbana'),
+                      _toggleButton('Spårvagn'),
+                      _toggleButton('Buss'),
+                      _toggleButton('Färja, Utrikes Färja'),
+                      _toggleButton('Taxi'),
+                    ],
+                    isSelected: value.travelMethods,
+                    onPressed: (int index) {
+                      // Toggles the value.
+                      value.setTravelMethodIndex(index, !value.travelMethods[index]);
+                    },
+                  ),
                 ),
               ),
             ),

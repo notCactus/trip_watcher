@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/departure_time.dart';
 import '../widgets/filter.dart';
 import '../widgets/search.dart';
+import '../widgets/add_button.dart';
 
 class HomePage extends StatelessWidget {
   static const routeName = '/home';
@@ -34,6 +35,10 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(
+              height: 16,
+            ),
+            AddButton(onTapFunction: () => print('Tap!'),),
           ],
         ),
       ),

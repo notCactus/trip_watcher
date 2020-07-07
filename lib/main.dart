@@ -5,6 +5,7 @@ import 'package:device_preview/device_preview.dart';
 
 import 'pages/home_page.dart';
 import 'providers/new_trip.dart';
+import 'providers/trip_list.dart';
 
 /*void main() => runApp(DevicePreview(
       builder: (context) => MyApp(),
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => NewTrip(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TripList(),
         ),
       ],
       child: MaterialApp(

@@ -15,7 +15,7 @@ class _TripListState extends State<TripList> {
   @override
   Widget build(BuildContext context) {
     List<Trips> _tripList =
-        Provider.of<tlp.TripList>(context, listen: false).trips;
+        Provider.of<tlp.TripList>(context, listen: true).trips;
     return Expanded(
       child: ReorderableListView(
         children: [

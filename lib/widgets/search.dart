@@ -47,7 +47,7 @@ class Search extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 49,
+          top: 32,
           right: 15,
           child: Column(
             children: <Widget>[
@@ -87,7 +87,6 @@ class ChooseStationButton extends StatelessWidget {
   final double topRightBorder;
   final double bottomLeftBorder;
   final double bottomRightBorder;
-  final String subtitle;
   final double topPadding;
   final double bottomPadding;
   final bool fromButton;
@@ -98,7 +97,6 @@ class ChooseStationButton extends StatelessWidget {
     this.topRightBorder = 8,
     this.bottomLeftBorder = 8,
     this.bottomRightBorder = 8,
-    this.subtitle = 'City',
     this.topPadding = 6,
     this.bottomPadding = 6,
     this.fromButton = true,
@@ -145,11 +143,6 @@ class ChooseStationButton extends StatelessWidget {
                 overflow: TextOverflow.clip,
                 maxLines: 1,
               ),
-            ),
-            subtitle: Text(
-              subtitle,
-              overflow: TextOverflow.clip,
-              maxLines: 1,
             ),
           ),
         ),

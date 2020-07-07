@@ -9,7 +9,7 @@ class TripList with ChangeNotifier {
   List<Trips> get trips => _trips;
 
   void addTrip(Trips newTrip) {
-    _trips.add(newTrip);
+    _trips.insert(0, newTrip);
     notifyListeners();
   }
 }

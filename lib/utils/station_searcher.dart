@@ -52,10 +52,6 @@ class StationSearcher extends SearchDelegate<StopLocation> {
 
   Stations _searchResult = Stations(
     stopLocation: [
-      StopLocation(
-          id: '740020755',
-          extId: '740020755',
-          name: 'Alvik T-bana (Stockholm kn)')
     ],
   );
 

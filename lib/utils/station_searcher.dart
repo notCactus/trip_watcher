@@ -23,7 +23,7 @@ Future<Stations> fetchStations(String query, Stations suggestedStations,
   const String _baseUrl =
       'https://api.resrobot.se/v2/location.name?key=${ApiKey.key}';
   String _url = _baseUrl + '&input=$query&format=json';
-
+  print(_url);
   Stations _stationsList;
 
   try {
@@ -81,6 +81,7 @@ class StationSearcher extends SearchDelegate<StopLocation> {
 
   @override
   Widget buildResults(BuildContext context) {
+    // TODO: Make it so that is builds the list.
     return Text('Something went wrong.');
   }
 

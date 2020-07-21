@@ -81,8 +81,38 @@ class StationSearcher extends SearchDelegate<StopLocation> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: Make it so that is builds the list.
-    return Text('Something went wrong.');
+    // The stations
+    Future<Stations> stationsFuture;
+
+    // The completer
+    Completer completer = new Completer<Stations>();
+
+    // The debouncing
+    _debouncer.run(() async {
+      completer.complete(await fetchStations(query, _searchResult));
+    });
+
+    stationsFuture = completer.future;
+
+    return FutureBuilder(
+      future: stationsFuture,
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            _searchResult = snapshot.data;
+            return stationSuggestionsList(_searchResult, context,
+                (ctx, newStopLocation) {
+              close(ctx, newStopLocation);
+            });
+            break;
+          default:
+            return stationSuggestionsList(_searchResult, context,
+                (ctx, newStopLocation) {
+              close(ctx, newStopLocation);
+            });
+        }
+      },
+    );
   }
 
   @override

@@ -15,7 +15,7 @@ import '../widgets/search.dart';
 import '../widgets/trip_list.dart';
 import '../providers/trip_list.dart' as tlp;
 
-void _fetchTest(BuildContext context) async {
+void _fetchTrip(BuildContext context) async {
   var _newTrip = Provider.of<NewTrip>(context, listen: false);
 
   if (_newTrip.fromStation.id != null && _newTrip.toStation.id != null) {
@@ -76,7 +76,7 @@ class HomePage extends StatelessWidget {
               height: 16,
             ),
             AddButton(
-              onTapFunction: () => _fetchTest(context),
+              onTapFunction: () => _fetchTrip(context),
             ),
             SizedBox(
               height: 20,

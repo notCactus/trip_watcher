@@ -4,8 +4,8 @@ An app that monitors departures for the public transportation in Stockholm, Swed
 
 ## Set up
 
-1. Add your [TrafikLab](https://www.trafiklab.se/) "ReseRobot - Reseplanerare" API KEY by creating a file called "devfile" at ```lib/utils```.
-Code to be added to the "devfile":
+1. Add your [TrafikLab](https://www.trafiklab.se/) "ReseRobot - Reseplanerare" API KEY by creating a file called "devfile.dart" at ```lib/utils```.
+Code to be added to the "devfile.dart":
 ```dart
 class ApiKey {
   static const key = 'YOUR_API_KEY';
